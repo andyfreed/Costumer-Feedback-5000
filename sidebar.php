@@ -106,14 +106,16 @@ label {display: block;margin-bottom: 10px;}input {width: calc(100% - 10px);paddi
             <h1>Hover Sidebar Form</h1>
             <form method="post">
                 <h2>Form Questions</h2>
-                <textarea name="questions" rows="5" style="width:100%;">' . esc_textarea($questions) . '</textarea>
-                <h2>Assign Questions to Pages, Post Types, Templates, or Post IDs</h2>';
+                <textarea name="questions" rows="5" style="width:100%; margin-bottom: 20px;">' . esc_textarea($questions) . '</textarea>';
 
         $questionsArray = explode("\n", $questions);
+        echo '<h2>Assign Questions to Pages, Post Types, Templates, or Post IDs</h2>';
         foreach ($questionsArray as $index => $question) {
-            echo '<label>' . esc_html($question) . ':
-                <select name="question_pages[' . $index . ']" style="width:100%;">
-                    <option value="">All Pages</option>';
+            echo '<div style="margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background: #f9f9f9;">
+                <label style="font-weight: bold;">' . esc_html($question) . '</label>
+                <div style="margin-top: 10px;">
+                    <select name="question_pages[' . $index . ']" style="width: 48%; margin-right: 2%;">
+                        <option value="">All Pages</option>';
 
             // Include Pages
             $pages = get_pages();
@@ -137,10 +139,9 @@ label {display: block;margin-bottom: 10px;}input {width: calc(100% - 10px);paddi
             }
 
             echo '</select>
-                <label>Assign by Post ID (comma-separated, e.g., "2,15,23"):<br>
-                    <input type="text" name="question_post_ids[' . $index . ']" style="width:100%;" value="' . esc_attr($question_post_ids[$index] ?? '') . '" />
-                </label>
-            </label>';
+                    <input type="text" name="question_post_ids[' . $index . ']" placeholder="Assign by Post ID (e.g., 2,15,23)" style="width: 48%;" value="' . esc_attr($question_post_ids[$index] ?? '') . '" />
+                </div>
+            </div>';
         }
 
         echo '<button type="submit" class="button button-primary">Save Questions</button>
